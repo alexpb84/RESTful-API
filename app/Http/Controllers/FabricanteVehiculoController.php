@@ -14,7 +14,7 @@ class FabricanteVehiculoController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth.basic', ['only' => ['store', 'update', 'destroy']]);
+        $this->middleware('auth.basic.once', ['only' => ['store', 'update', 'destroy']]);
     }
 
     /**
@@ -32,16 +32,6 @@ class FabricanteVehiculoController extends Controller
         }
 
         return response()->json(['datos' => $fabricante->vehiculos], 200);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create($id)
-    {
-        return 'Mostrando formulario para agregar vehiculo al fabricante ' . $id;
     }
 
     /**
@@ -67,34 +57,12 @@ class FabricanteVehiculoController extends Controller
 
         if( !$fabricante )
         {
-            return response()->json(['mensaje' => 'No existe el fabricante asociado', 'codigo' => 404], 404);            
+            return response()->json(['mensaje' => 'No existe el fabricante asociado', 'codigo' => 404], 404);
         }
 
         $fabricante->vehiculos()->create($request->all());
 
         return response()->json(['mensaje' => 'vehiculo insertado'], 201);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function show($idFabricante, $idVehiculo)
-    {
-        return 'Mostrando vehiculo ' . $idVehiculo . ' del fabricante ' . $idFabricante;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($idFabricante, $idVehiculo)
-    {
-        return 'Mostrando formulario para editar el vehiculo ' . $idVehiculo . ' del fabricante ' . $idFabricante;
     }
 
     /**
