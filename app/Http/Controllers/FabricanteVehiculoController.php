@@ -203,6 +203,6 @@ class FabricanteVehiculoController extends Controller
 
         $vehiculo->delete();
 
-        return response()->json(['mensaje' => 'Vehiculo eliminado'], 201);
+        return response()->json(['mensaje' => 'Vehiculo eliminado'], 200);
     }
 }
