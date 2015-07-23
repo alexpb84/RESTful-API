@@ -164,7 +164,7 @@ class FabricanteVehiculoController extends Controller
             
         }
 
-        if( !$color || !$cilindraje || $potencia || $peso )
+        if( !$color || !$cilindraje || !$potencia || !$peso )
         {
             return response()->json(['mensaje' => 'No se pudieron procesar los valores', 'codigo' => 422], 422);
         }
@@ -187,6 +187,22 @@ class FabricanteVehiculoController extends Controller
      */
     public function destroy($idFabricante, $idVehiculo)
     {
-        //
+        $fabricante = Fabricante::find($idFabricante);
+
+        if( !$fabricante )
+        {
+            return response()->json(['mensaje' => 'No se encuentra este fabricante', 'codigo' => 404], 404);
+        }
+
+        $vehiculo = $fabricante->vehiculos()->find($idVehiculo);
+
+        if( !$vehiculo )
+        {
+            return response()->json(['mensaje' => 'No se encuentra este vehiculo asociado a ese fabricante', 'codigo' => 404], 404);   
+        }
+
+        $vehiculo->delete();
+
+        return response()->json(['mensaje' => 'Vehiculo eliminado'], 201);
     }
 }
